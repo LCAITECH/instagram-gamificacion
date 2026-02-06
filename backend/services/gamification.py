@@ -25,7 +25,7 @@ def get_or_create_user(db: Session, username: str, full_name: str = "Unknown") -
     return user
 
 def process_interaction(db: Session, data: schemas.WebhookInteraction, bg_tasks: BackgroundTasks):
-    user = get_or_create_user(db, data.instagram_username)
+    user = get_or_create_user(db, data.instagram_username, data.full_name)
     
     points_to_add = 0
     reason = ""

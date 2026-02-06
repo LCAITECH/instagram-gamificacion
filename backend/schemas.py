@@ -6,6 +6,7 @@ class WebhookInteraction(BaseModel):
     answer: str
     category: Optional[str] = "General" # e.g., "Metals", "Trading"
     correct_answer: Optional[str] = None # SendPulse can send the "right" answer for this specific reel
+    full_name: Optional[str] = "Unknown" # Allows capturing name during interaction creation
 
 class WebhookOnboarding(BaseModel):
     instagram_username: str
