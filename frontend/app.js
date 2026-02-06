@@ -1,4 +1,5 @@
-const API_URL = "http://127.0.0.1:8000";
+// Use relative path for production (Render serves both front and back)
+const API_URL = "";
 
 async function login() {
     const usernameInput = document.getElementById('username-input');
