@@ -43,7 +43,7 @@ def process_interaction(db: Session, data: schemas.WebhookInteraction, bg_tasks:
         points_to_add = 5
         reason = f"{data.category}: Correct Answer"
     else:
-        points_to_add = 2
+        points_to_add = 1
         reason = f"{data.category}: Participation ({data.answer})"
         
     # Update User

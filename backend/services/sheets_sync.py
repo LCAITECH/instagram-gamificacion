@@ -92,10 +92,10 @@ def get_active_missions():
     Fallback: Returns hardcoded list if sheet/tab is not found.
     """
     default_missions = [
-        {"title": "Reel: Bitcoin Sepultado", "category": "Crypto", "points": 5, "link": "#"},
-        {"title": "Reel: Llegó el Litio", "category": "Materias Primas", "points": 5, "link": "#"},
-        {"title": "Reel: Lo Reventaron", "category": "Crypto", "points": 5, "link": "#"},
-        {"title": "Reel: El Oro ha vuelto", "category": "Metales", "points": 5, "link": "#"}
+        {"title": "Reel: Bitcoin Sepultado", "category": "Crypto", "points": 1, "link": "#"},
+        {"title": "Reel: Llegó el Litio", "category": "Materias Primas", "points": 1, "link": "#"},
+        {"title": "Reel: Lo Reventaron", "category": "Crypto", "points": 1, "link": "#"},
+        {"title": "Reel: El Oro ha vuelto", "category": "Metales", "points": 1, "link": "#"}
     ]
 
     try:
