@@ -84,3 +84,57 @@ def sync_user_to_sheets(user_id: int):
         db.close()
     
     return True
+
+def get_active_missions():
+    """
+    Fetches active missions/reels from a 'Misiones' tab in Google Sheets.
+    Format expected in Sheet: [Title, Category, Points, ImageURL (optional)]
+    Fallback: Returns hardcoded list if sheet/tab is not found.
+    """
+    default_missions = [
+        {"title": "Reel: Bitcoin Sepultado", "category": "Crypto", "points": 5, "link": "#"},
+        {"title": "Reel: Llegó el Litio", "category": "Materias Primas", "points": 5, "link": "#"},
+        {"title": "Reel: Lo Reventaron", "category": "Crypto", "points": 5, "link": "#"},
+        {"title": "Reel: El Oro ha vuelto", "category": "Metales", "points": 5, "link": "#"}
+    ]
+
+    try:
+        gc = gspread.service_account(filename=CREDS_PATH)
+        sh = gc.open_by_key(SHEET_ID)
+        
+        # Try to get specific "Misiones" worksheet
+        try:
+            ws = sh.worksheet("Misiones")
+        except gspread.WorksheetNotFound:
+            print("[Sheets Sync] 'Misiones' tab not found. Using defaults.")
+            return default_missions
+
+        # Get all records
+        records = ws.get_all_records()
+        
+        # Validar empty
+        if not records:
+             return default_missions
+
+        # Transform to clean format (keys might vary if user types differently)
+        clean_missions = []
+        for r in records:
+            # Flexible key access (case insensitive if possible, but basic for now)
+            # Row keys depend on the Header row in Sheets (Row 1)
+            # Expected Headers: Titulo, Categoria, Puntos, Link
+            if r.get("Titulo"):
+                clean_missions.append({
+                    "title": r.get("Titulo"),
+                    "category": r.get("Categoria", "General"),
+                    "points": r.get("Puntos", 0),
+                    "link": r.get("Link", "#")
+                })
+        
+        if not clean_missions:
+            return default_missions
+            
+        return clean_missions
+
+    except Exception as e:
+        print(f"[Sheets Sync] Error fetching missions: {e}")
+        return default_missions

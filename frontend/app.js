@@ -47,6 +47,7 @@ async function login() {
 
         document.getElementById('user-score').innerText = data.loyalty_score;
 
+
         // Update Progress Bar
         const progressEl = document.querySelector('.overflow-hidden > div');
         if (progressEl) {
@@ -54,10 +55,48 @@ async function login() {
             progressEl.innerText = `${data.progress_percent}%`;
         }
 
+        // LOAD MISSIONS
+        loadMissions();
+
     } catch (error) {
         console.error(error);
         alert("Error al conectar. Asegúrate de que el servidor backend esté corriendo (main.py).");
         btn.innerText = originalText;
         btn.disabled = false;
+    }
+}
+
+async function loadMissions() {
+    try {
+        const res = await fetch(`${API_URL}/api/users/missions/active`);
+        if (!res.ok) return;
+        const missions = await res.json();
+
+        const container = document.getElementById('missions-container');
+        if (!container) return;
+
+        container.innerHTML = ''; // Clear hardcoded
+
+        missions.forEach(m => {
+            const el = document.createElement('div');
+            el.className = "bg-dark/40 p-3 rounded-lg hover:bg-dark/60 transition-colors cursor-pointer group border border-transparent hover:border-accent/30";
+            el.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="font-bold text-sm group-hover:text-accent transition-colors">${m.title}</h4>
+                        <p class="text-xs text-gray-400">Categoría: ${m.category}</p>
+                    </div>
+                    <span class="text-xs font-bold text-gold">+${m.points} pts</span>
+                </div>
+            `;
+            // Optional: Add click handler if link exists
+            if (m.link && m.link !== "#") {
+                el.onclick = () => window.open(m.link, '_blank');
+            }
+            container.appendChild(el);
+        });
+
+    } catch (e) {
+        console.error("Error loading missions", e);
     }
 }

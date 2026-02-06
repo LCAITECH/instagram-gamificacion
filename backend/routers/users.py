@@ -23,3 +23,8 @@ def get_user_profile(username: str, db: Session = Depends(database.get_db)):
         "next_rank_points": 100, # Hardcoded for now or calculate dynamic
         "progress_percent": min((user.loyalty_score / 100) * 100, 100) # Simple logic to Silver
     }
+
+@router.get("/missions/active")
+def get_missions():
+    from ..services import sheets_sync
+    return sheets_sync.get_active_missions()
