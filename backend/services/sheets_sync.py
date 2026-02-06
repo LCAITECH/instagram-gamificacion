@@ -91,11 +91,12 @@ def get_active_missions():
     Format expected in Sheet: [Title, Category, Points, ImageURL (optional)]
     Fallback: Returns hardcoded list if sheet/tab is not found.
     """
+    profile_url = "https://www.instagram.com/learncryptoacademy/"
     default_missions = [
-        {"title": "Reel: Bitcoin Sepultado", "category": "Crypto", "points": 1, "link": "#"},
-        {"title": "Reel: Llegó el Litio", "category": "Materias Primas", "points": 1, "link": "#"},
-        {"title": "Reel: Lo Reventaron", "category": "Crypto", "points": 1, "link": "#"},
-        {"title": "Reel: El Oro ha vuelto", "category": "Metales", "points": 1, "link": "#"}
+        {"title": "Reel: Bitcoin Sepultado", "category": "Crypto", "points": 1, "link": profile_url},
+        {"title": "Reel: Llegó el Litio", "category": "Materias Primas", "points": 1, "link": profile_url},
+        {"title": "Reel: Lo Reventaron", "category": "Crypto", "points": 1, "link": profile_url},
+        {"title": "Reel: El Oro ha vuelto", "category": "Metales", "points": 1, "link": profile_url}
     ]
 
     try:
