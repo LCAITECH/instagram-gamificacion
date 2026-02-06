@@ -11,7 +11,12 @@ router = APIRouter(
 @router.post("/interaction")
 def webhook_interaction(data: schemas.WebhookInteraction, background_tasks: BackgroundTasks, db: Session = Depends(database.get_db)):
     user = gamification.process_interaction(db, data, background_tasks)
-    return {"status": "ok", "new_score": user.loyalty_score}
+    return {
+        "status": "ok", 
+        "new_score": user.loyalty_score,
+        "new_rank": user.rank,
+        "current_interest": user.main_interest
+    }
 
 @router.post("/onboarding")
 def webhook_onboarding(data: schemas.WebhookOnboarding, background_tasks: BackgroundTasks, db: Session = Depends(database.get_db)):
