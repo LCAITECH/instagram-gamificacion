@@ -17,8 +17,8 @@ async function login() {
     btn.disabled = true;
 
     try {
-        // Real GET endpoint call
-        const response = await fetch(`${API_URL}/api/users/${username}`);
+        // Real GET endpoint call with cache busting
+        const response = await fetch(`${API_URL}/api/users/${username}?_=${Date.now()}`);
 
         if (!response.ok) {
             if (response.status === 404) {
